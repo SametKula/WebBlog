@@ -11,7 +11,7 @@ public class AccountDtoConverter {
                 .id(from.getId())
                 .username(from.getUsername())
                 .email(from.getEmail())
-                .profilePicture(from.getProfilePicture())
+                .profilePicture(from.getAccountPicture().getPicture())
                 .isAccountNonExpired(from.isAccountNonExpired())
                 .isAccountNonLocked(from.isAccountNonLocked())
                 .isCredentialsNonExpired(from.isCredentialsNonExpired())
