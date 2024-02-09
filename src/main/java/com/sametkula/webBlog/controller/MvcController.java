@@ -27,20 +27,22 @@ public class MvcController {
     @GetMapping("/profile/{id}")
     public String account(Model model, @PathVariable String id) {
 
-        model.addAttribute("User", mvcService.getUserById("id"));
+        model.addAttribute("user", mvcService.getUserById(id));
 
         return "profile";
     }
 
-    @GetMapping("/profile")
+    @GetMapping("/myprofile")
     public String detailedAccount(Model model) {
 
-        return "profile";
+        return "MyProfile";
     }
     @PostMapping("/profile")
-    public String createAccount(Model model, @RequestBody CreateAccountRequest req) {
+    public String createAccount(Model model, @RequestBody CreateAccountRequest req) throws Exception {
 
-        model.addAttribute("userCreated", mvcService.createUser(req));
+        model.addAttribute("user", mvcService.createUser(req));
+
+        System.out.println(model.getAttribute("user"));
 
         return "profile";
     }

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en"
+                     xmlns="http://www.w3.org/1999/xhtml"
+                     xmlns:th="http://www.thymeleaf.org"
+                     xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>main page</title>
+</head>
+<body>
+
+<h1>All profiles</h1>
+<ul>
+    <li th:each="account : ${AllUsers}">
+        <span th:text="${account.getUsername()}"></span>
+    </li>
+</ul>
+</body>
+</html>

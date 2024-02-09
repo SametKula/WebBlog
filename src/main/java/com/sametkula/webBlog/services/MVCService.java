@@ -22,14 +22,12 @@ public class MVCService {
     }
 
     public List<AccountDto> getAllUsers() {
-        return accountService.getAllAccounts().stream()
-                .map(accountDtoConverter::convertToDto)
-                .collect(Collectors.toList());
+        return accountService.getAllAccounts();
     }
     public AccountDto getUserById(String id) {
         return accountDtoConverter.convertToDto(accountService.getAccountById(UUID.fromString(id)));
     }
-    public AccountDto createUser(CreateAccountRequest req) {
+    public AccountDto createUser(CreateAccountRequest req) throws Exception {
         return accountDtoConverter.convertToDto(accountService.createAccount(req));
     }
     public AccountDto updateUser(UpdateAccountRequest req) {
