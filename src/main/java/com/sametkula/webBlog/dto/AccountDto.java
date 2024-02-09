@@ -21,6 +21,5 @@ public class AccountDto {
     private boolean isAccountNonLocked;
     private boolean isCredentialsNonExpired;
     private boolean isEnabled;
-    private byte[] profilePicture;
     private String roles;
 }

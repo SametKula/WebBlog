@@ -1,10 +1,7 @@
 package com.sametkula.webBlog.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.util.List;
@@ -15,6 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "roles")
+@ToString
 public class Role implements GrantedAuthority {
 
     @Id
@@ -25,13 +23,13 @@ public class Role implements GrantedAuthority {
     @Column(name = "role_name")
     private String roleName;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
-            name = "acoount_role",
+            name = "account_role",
             joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "account_id", referencedColumnName = "id")
     )
-    private List<Role> roles;
+    private List<Account> accounts;
 
     @Override
     public String getAuthority() {

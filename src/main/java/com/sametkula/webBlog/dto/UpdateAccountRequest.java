@@ -26,6 +26,5 @@ public class UpdateAccountRequest {
     private boolean isAccountNonLocked;
     private boolean isCredentialsNonExpired;
     private boolean isEnabled;
-    private byte[] profilePicture;
     private Set<Role> roles;
 }

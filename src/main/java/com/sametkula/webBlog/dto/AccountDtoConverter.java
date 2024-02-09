@@ -3,6 +3,8 @@ package com.sametkula.webBlog.dto;
 import com.sametkula.webBlog.model.Account;
 import org.springframework.stereotype.Component;
 
+import java.util.Set;
+
 @Component
 public class AccountDtoConverter {
 
@@ -11,14 +13,12 @@ public class AccountDtoConverter {
                 .id(from.getId())
                 .username(from.getUsername())
                 .email(from.getEmail())
-                .profilePicture(from.getAccountPicture().getPicture())
                 .isAccountNonExpired(from.isAccountNonExpired())
                 .isAccountNonLocked(from.isAccountNonLocked())
                 .isCredentialsNonExpired(from.isCredentialsNonExpired())
                 .isEnabled(from.isEnabled())
                 .isEmailEnabled(from.isEmailEnabled())
                 .totalPost(from.getTotalPost())
-                .roles(from.getRoles().toString())
                 .build();
     }
 }

@@ -1,13 +1,15 @@
 package com.sametkula.webBlog.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.annotations.GenericGenerator;
+
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.UuidGenerator;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -17,10 +19,11 @@ import java.util.UUID;
 @AllArgsConstructor
 @Builder
 @Table(name = "Accounts")
+@ToString
 public class Account implements UserDetails {
 
     @Id
-    @Column(name = "id")
+    @Column(name = "id", updatable = false, nullable = false)
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
@@ -31,6 +34,7 @@ public class Account implements UserDetails {
     private String password;
 
     @Column(name = "creation_date")
+    @Builder.Default
     private Date creationDate = new Date();
 
     @Column(name = "email")
@@ -40,35 +44,49 @@ public class Account implements UserDetails {
     private boolean isEmailEnabled;
 
     @Column(name = "totalPost")
-    private Integer totalPost;
+    @Builder.Default
+    private Integer totalPost = 0;
 
     @Column(name = "isAccountNonExpired")
-    private boolean isAccountNonExpired;
+    @Builder.Default
+    private boolean isAccountNonExpired = true;
 
     @Column(name = "isAccountNonLocked")
-    private boolean isAccountNonLocked;
+    @Builder.Default
+    private boolean isAccountNonLocked = true;
 
     @Column(name = "isCredentialsNonExpired")
-    private boolean isCredentialsNonExpired;
+    @Builder.Default
+    private boolean isCredentialsNonExpired = true;
 
     @Column(name = "isEnabled")
-    private boolean isEnabled;
+    @Builder.Default
+    private boolean isEnabled = true;
 
-    @OneToOne(mappedBy = "account")
-    private AccountPicture accountPicture;
+    @OneToOne(mappedBy = "account", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @Builder.Default
+    private AccountPicture accountPicture = null;
+
+    @OneToMany(mappedBy = "author", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @Builder.Default
+    private List<Post> posts = null;
+
+    @OneToMany(mappedBy = "author", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @Builder.Default
+    private List<Comment> comments = null;
 
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
-            name = "acoount_role",
+            name = "account_role",
             joinColumns = @JoinColumn(name = "account_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")
     )
-    private Set<Role> roles;
+    private List<Role> roles;
 
 
     @Override
-    public Set<Role> getAuthorities() {
+    public List<Role> getAuthorities() {
         return this.roles;
     }
 

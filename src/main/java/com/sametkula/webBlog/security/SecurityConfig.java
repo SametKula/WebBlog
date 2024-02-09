@@ -14,6 +14,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableMethodSecurity
 @EnableWebSecurity
 public class SecurityConfig {
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity security) throws Exception {
         security
@@ -22,7 +23,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(x ->
                         x
                                 .requestMatchers("/","/access-denied","/detailed-post","/login","/logout"
-                                        ,"/register","/error","/static/**")
+                                        ,"/register","/error","/static/**", "/profile")
                                 .permitAll()
                                 .requestMatchers("/profile", "/profile/**").authenticated()
                                 .anyRequest().authenticated()
